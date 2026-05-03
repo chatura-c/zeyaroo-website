@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Copy this file to deploy.sh and fill in your values (deploy.sh is gitignored)
+DEST="ubuntu@YOUR_SERVER_IP:/opt/zeyaroo/landing"
+KEY="$HOME/.ssh/id_ed25519"
+
+ssh -i "$KEY" ubuntu@YOUR_SERVER_IP "mkdir -p /opt/zeyaroo/landing/assets"
+
+rsync -az --delete \
+  -e "ssh -i $KEY" \
+  "$(dirname "$0")/brochure.html" \
+  "$DEST/index.html"
+
+rsync -az --delete \
+  -e "ssh -i $KEY" \
+  "$(dirname "$0")/assets/" \
+  "$DEST/assets/"
+
+echo "Landing page deployed to $DEST"

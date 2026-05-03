@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zeyaroo - Built for Creators</title>
+  <meta name="description" content="Zeyaroo is the professional platform for photographers and videographers. Milestone-based escrow payments, proposal negotiation, and protected media delivery." />
+
+  <!-- OG -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://zeyaroo.com" />
+  <meta property="og:title" content="Zeyaroo - Built for Creators" />
+  <meta property="og:description" content="Professional client management for photographers and videographers. Get paid reliably, deliver securely." />
+  <meta property="og:image" content="./assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="./assets/og-image.png" />
+
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F7F5F0;
+      --cream-2: #EDE8E0;
+      --cream-3: #E4DDD2;
+      --ink:     #1C1C1A;
+      --muted:   #8E8E88;
+      --gold:    #C5A059;
+      --gold-dk: #8B6B2E;
+      --border:  #E0DBD3;
+      --fg:      'Familjen Grotesk', sans-serif;
+      --ui:      'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--ui);
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(247,245,240,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo img { height: 28px; display: block; }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+    .btn-nav {
+      padding: 0.55rem 1.4rem;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--ui);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-nav:hover { background: var(--gold-dk); transform: translateY(-1px); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: all 0.2s;
+    }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      position: fixed;
+      top: 58px; left: 0; right: 0;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 1rem 0;
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-mobile a:last-child { border-bottom: none; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 9rem 2rem 6rem;
+      position: relative;
+    }
+
+    .hero-line {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 80%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .beta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--gold);
+      background: rgba(197,160,89,0.08);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 2rem;
+    }
+
+    .beta-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .hero h1 {
+      font-family: var(--fg);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      max-width: 14ch;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: var(--muted);
+      max-width: 48ch;
+      margin-bottom: 3rem;
+      font-weight: 400;
+      position: relative;
+    }
+
+    /* EMAIL CAPTURE */
+    .waitlist-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      width: 100%;
+      border: 1px solid var(--border);
+      background: white;
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .waitlist-form input {
+      flex: 1;
+      padding: 0.85rem 1.1rem;
+      border: none;
+      background: transparent;
+      font-family: var(--ui);
+      font-size: 0.9rem;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .waitlist-form input::placeholder { color: var(--muted); }
+
+    .waitlist-form button {
+      padding: 0.85rem 1.4rem;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--ui);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .waitlist-form button:hover { background: var(--gold-dk); }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      position: relative;
+    }
+
+    .hero-note a { color: var(--muted); }
+
+    /* ── LOGO BAR ── */
+    .logo-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      background: var(--cream-2);
+    }
+
+    .logo-bar-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .logo-bar-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+
+    .logo-bar-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+    }
+
+    .logo-bar-stat strong {
+      font-family: var(--fg);
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+
+    .logo-bar-stat span {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--fg);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-title em { font-style: italic; font-weight: 600; color: var(--gold); }
+
+    .section-body {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 52ch;
+      line-height: 1.8;
+    }
+
+    .rule {
+      width: 36px;
+      height: 2px;
+      background: var(--gold);
+      margin: 1.2rem 0;
+    }
+
+    /* ── PROBLEM ── */
+    .problem { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .pain-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .pain-list li {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .pain-list li::before {
+      content: '-';
+      color: var(--cream-3);
+      flex-shrink: 0;
+    }
+
+    .quote-card {
+      border: 1px solid var(--border);
+      background: var(--cream);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .quote-card::before {
+      content: '"';
+      font-family: var(--fg);
+      font-size: 5rem;
+      line-height: 0.6;
+      color: var(--gold);
+      opacity: 0.25;
+      position: absolute;
+      top: 1.5rem;
+      left: 2rem;
+    }
+
+    .quote-card blockquote {
+      font-family: var(--fg);
+      font-size: 1.2rem;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      padding-top: 1.5rem;
+    }
+
+    .quote-card cite {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-style: normal;
+    }
+
+    /* ── FEATURES ── */
+    .features-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .features-header .section-body { text-align: center; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      background: var(--border);
+      gap: 1px;
+    }
+
+    .feature-card {
+      background: var(--cream);
+      padding: 2.5rem;
+      transition: background 0.2s;
+    }
+
+    .feature-card:hover { background: white; }
+
+    .feature-icon {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+      background: white;
+    }
+
+    .feature-icon svg { width: 17px; height: 17px; stroke-width: 1.5; }
+
+    .feature-card h3 {
+      font-family: var(--fg);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+      color: var(--ink);
+    }
+
+    .feature-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 1.75rem;
+      left: calc(16.67% + 1rem);
+      right: calc(16.67% + 1rem);
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--cream-3) 50%, var(--gold) 100%);
+    }
+
+    .step { padding: 0 1rem; text-align: center; }
+
+    .step-num {
+      width: 3.5rem; height: 3.5rem;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      font-family: var(--fg);
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--gold);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step h3 {
+      font-family: var(--fg);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+      color: var(--ink);
+    }
+
+    .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── BETA ── */
+    .beta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .offer-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .offer-list li {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .offer-list li .check {
+      color: var(--gold);
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    .offer-card {
+      border: 1px solid var(--border);
+      background: white;
+      padding: 2.5rem;
+    }
+
+    .offer-price {
+      font-family: var(--fg);
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+
+    .offer-price-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .offer-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .btn-block {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 0.9rem 1.5rem;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--ui);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-block:hover { background: var(--gold-dk); }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      text-align: center;
+      padding: 8rem 2rem;
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-final::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(197,160,89,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(197,160,89,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+    }
+
+    .cta-final .section-label { color: var(--gold); margin-bottom: 1.5rem; }
+
+    .cta-final h2 {
+      font-family: var(--fg);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--cream);
+      max-width: 18ch;
+      margin: 0 auto 1.5rem;
+    }
+
+    .cta-final h2 em { font-style: italic; color: var(--gold); }
+
+    .cta-final p {
+      color: #6b6b66;
+      max-width: 44ch;
+      margin: 0 auto 2.5rem;
+      font-size: 1rem;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 0;
+      max-width: 420px;
+      width: 100%;
+      margin: 0 auto 1.2rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .cta-form input {
+      flex: 1;
+      padding: 0.85rem 1.1rem;
+      background: transparent;
+      border: none;
+      font-family: var(--ui);
+      font-size: 0.9rem;
+      color: var(--cream);
+      outline: none;
+    }
+
+    .cta-form input::placeholder { color: #6b6b66; }
+
+    .cta-form button {
+      padding: 0.85rem 1.4rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: var(--ui);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .cta-form button:hover { background: #d4b070; }
+
+    .cta-note {
+      font-size: 0.78rem;
+      color: #4a4a46;
+      position: relative;
+    }
+
+    .cta-note a { color: #6b6b66; text-decoration: none; }
+    .cta-note a:hover { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #141412;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer img { height: 22px; display: block; }
+
+    footer .foot-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    footer .foot-links a {
+      font-size: 0.8rem;
+      color: #4a4a46;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    footer .foot-links a:hover { color: #8E8E88; }
+
+    footer .foot-copy {
+      font-size: 0.78rem;
+      color: #3a3a38;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .btn-nav { display: none; }
+      .nav-hamburger { display: flex; }
+
+      section { padding: 4rem 1.5rem; }
+
+      .problem-grid,
+      .beta-grid,
+      .steps { grid-template-columns: 1fr; }
+
+      .features-grid { grid-template-columns: 1fr 1fr; }
+
+      .steps::before { display: none; }
+
+      .waitlist-form { flex-direction: column; border: none; background: none; gap: 0.75rem; }
+      .waitlist-form input { border: 1px solid var(--border); background: white; }
+      .waitlist-form button { width: 100%; }
+
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+      footer .foot-links { justify-content: center; }
+
+      .logo-bar { flex-wrap: wrap; gap: 1.5rem 2rem; }
+      .logo-bar-divider { display: none; }
+    }
+
+    @media (max-width: 580px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .cta-form { flex-direction: column; background: none; border: none; }
+      .cta-form input { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); }
+      .cta-form button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo" aria-label="Zeyaroo home">
+      <img src="./assets/logo.svg" alt="Zeyaroo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#beta">Beta</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://app.zeyaroo.com/register" class="btn-nav">Sign Up</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="navMobile">
+    <a href="#features" onclick="toggleMenu()">Features</a>
+    <a href="#how" onclick="toggleMenu()">How it works</a>
+    <a href="#beta" onclick="toggleMenu()">Beta</a>
+    <a href="https://app.zeyaroo.com/register">Sign Up</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-line"></div>
+
+    <div class="beta-badge">Private Beta · Now Open</div>
+
+    <h1>Your craft deserves<br /><em>better business</em></h1>
+
+    <p class="hero-sub">
+      Zeyaroo is the professional platform for photographers and videographers -
+      structured proposals, milestone payments, and protected media delivery.
+    </p>
+
+    <a href="https://app.zeyaroo.com/register" class="btn-block" style="display:inline-block;width:auto;padding:0.85rem 2.4rem;font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase">Create Your Account</a>
+    <p class="hero-note">Free during beta. No credit card needed. Approval required.</p>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="logo-bar reveal">
+    <span class="logo-bar-label">Launching with</span>
+    <div class="logo-bar-divider"></div>
+    <div class="logo-bar-stat">
+      <strong>Free</strong>
+      <span>During Beta</span>
+    </div>
+    <div class="logo-bar-divider"></div>
+    <div class="logo-bar-stat">
+      <strong>10</strong>
+      <span>Max Milestones</span>
+    </div>
+    <div class="logo-bar-divider"></div>
+    <div class="logo-bar-stat">
+      <strong>100%</strong>
+      <span>Creator-owned</span>
+    </div>
+    <div class="logo-bar-divider"></div>
+    <div class="logo-bar-stat">
+      <strong>Private</strong>
+      <span>Invite Only</span>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="container">
+      <div class="problem-grid">
+        <div class="reveal">
+          <div class="section-label">The Reality</div>
+          <h2 class="section-title">Running a creative business<br /><em>shouldn't be this hard</em></h2>
+          <div class="rule"></div>
+          <ul class="pain-list">
+            <li>Chasing clients for payments agreed weeks ago</li>
+            <li>Proposals lost in email threads and WhatsApp chats</li>
+            <li>Handing over work before the final invoice is paid</li>
+            <li>No professional system - just improvised workflows</li>
+            <li>Admin eating into time you should spend shooting</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <div class="quote-card">
+            <blockquote>
+              "I delivered the full gallery and waited two months for the
+              final payment. There's no protection for us as creators."
+            </blockquote>
+            <cite>- Photographer, Beta Tester</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="features-header reveal">
+        <div class="section-label">Platform Features</div>
+        <h2 class="section-title">Everything you need.<br /><em>Nothing you don't.</em></h2>
+        <p class="section-body">
+          One professional home for every client engagement - from first message to final payment.
+        </p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="2" y="3" width="20" height="14" rx="1"/><path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <h3>Structured Proposals</h3>
+          <p>Send versioned proposals with clear deliverables, timelines, and milestones. Counter-propose and negotiate in one place.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3>Milestone Escrow</h3>
+          <p>Clients fund each milestone before work begins. Payments are protected and released on completion - automatically.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+            </svg>
+          </div>
+          <h3>Protected Media Delivery</h3>
+          <p>Share watermarked previews instantly. Full-resolution files unlock only when the milestone is approved.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3>Client Portal</h3>
+          <p>Clients get a clean portal to view proposals, fund milestones, and download approved media. Professional by default.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3>Creator Profile</h3>
+          <p>A professional public presence with portfolio, bio, service categories, and social links - not just another feed.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </div>
+          <h3>Shareable Galleries</h3>
+          <p>Generate password-protected, expiring gallery links. Share selects with clients or publish a portfolio - your call.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Process</div>
+        <h2 class="section-title">Simple from first message<br /><em>to final payment</em></h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <h3>Send a Proposal</h3>
+          <p>Define deliverables, timeline, and milestones. Negotiate terms inline until both parties agree - everything versioned.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <h3>Client Funds Milestones</h3>
+          <p>Funds are held in escrow before work begins. Your payment is secured before you pick up the camera.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <h3>Deliver &amp; Get Paid</h3>
+          <p>Upload media, share watermarked previews, release full files on approval. Funds transfer on completion.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETA -->
+  <section id="beta">
+    <div class="container">
+      <div class="section-label reveal">Beta Access</div>
+      <div class="beta-grid">
+        <div class="reveal">
+          <h2 class="section-title">Be first.<br /><em>Shape what it becomes.</em></h2>
+          <div class="rule"></div>
+          <p class="section-body">
+            We're opening Zeyaroo to a small group of professional creators.
+            Early members get founding benefits - and a direct line to the product team.
+          </p>
+          <ul class="offer-list">
+            <li><span class="check">✦</span> Free access for the full beta period</li>
+            <li><span class="check">✦</span> Founding rate locked in at public launch</li>
+            <li><span class="check">✦</span> Direct feedback channel to the team</li>
+            <li><span class="check">✦</span> Priority onboarding and support</li>
+            <li><span class="check">✦</span> Early access to every new feature</li>
+          </ul>
+        </div>
+        <div class="offer-card reveal">
+          <div class="offer-price">Free</div>
+          <div class="offer-price-label">During Beta · No credit card needed</div>
+          <p>
+            Limited spots. We're onboarding photographers and videographers who
+            want to run their business with clarity, protection, and professionalism.
+          </p>
+          <a href="https://app.zeyaroo.com/register" class="btn-block">
+            Apply for Beta Access
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-final">
+    <div class="container" style="position:relative">
+      <div class="section-label">Ready?</div>
+      <h2>Stop improvising.<br /><em>Start building a real business.</em></h2>
+      <p>
+        Join the creators using Zeyaroo to protect their work,
+        get paid reliably, and deliver an experience worth remembering.
+      </p>
+      <a href="https://app.zeyaroo.com/register" class="btn-block" style="display:inline-block;width:auto;padding:0.85rem 2.4rem;font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase">Create Your Account</a>
+      <p class="cta-note">
+        Free during beta. Accounts require approval.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" aria-label="Zeyaroo home">
+      <img src="./assets/logo-dark.svg" alt="Zeyaroo" />
+    </a>
+    <ul class="foot-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="mailto:hello@zeyaroo.com">Contact</a></li>
+      <li><a href="mailto:support@zeyaroo.com">Support</a></li>
+    </ul>
+    <p class="foot-copy">© 2025 Zeyaroo · Private Beta</p>
+  </footer>
+
+  <script>
+    // Mobile nav
+    function toggleMenu() {
+      document.getElementById('navMobile').classList.toggle('open');
+    }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
