@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zeyaroo — Beta Poster</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F7F5F0;
+      --ink:     #1C1C1A;
+      --muted:   #8E8E88;
+      --gold:    #C5A059;
+      --gold-dk: #8B6B2E;
+    }
+
+    /* ─── PAGE CHROME ─────────────────────────────────── */
+    body {
+      background: #141412;
+      color: var(--cream);
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      padding: 48px 32px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    #chrome {
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 8px;
+    }
+
+    .page-header h1 {
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--cream);
+    }
+
+    .page-header p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      padding: 0.55rem 1.1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .btn-primary:hover { background: #d4b070; }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .page-hint {
+      font-size: 0.75rem;
+      color: #4a4a46;
+      margin-top: 12px;
+    }
+
+    /* ─── POSTER WRAP ──────────────────────────────────── */
+    .poster-wrap {
+      width: 540px;
+      height: 540px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    /* ─── POSTER (1080×1080, scaled to 540px for preview) ─ */
+    .poster {
+      width: 1080px;
+      height: 1080px;
+      transform: scale(0.5);
+      transform-origin: top left;
+
+      background: #1C1C1A;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle gold grid — matches cta-final on brochure */
+    .poster-texture {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(197,160,89,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(197,160,89,0.055) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 10%, transparent 75%);
+      pointer-events: none;
+    }
+
+    /* Large faded mark as decorative background — three rectangles from the logo */
+    .poster-deco {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-55%);
+      width: 600px;
+      height: 600px;
+      opacity: 0.042;
+      pointer-events: none;
+    }
+
+    .poster-inner {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 84px;
+    }
+
+    /* ── Header ── */
+    .poster-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .poster-logo {
+      height: 52px;
+      display: block;
+    }
+
+    .poster-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border: 1px solid rgba(197,160,89,0.35);
+      background: rgba(197,160,89,0.06);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #C5A059;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .poster-badge::before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #C5A059;
+      flex-shrink: 0;
+    }
+
+    /* ── Body ── */
+    .poster-body {
+      padding-top: 20px;
+    }
+
+    .poster-label {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #C5A059;
+      margin-bottom: 22px;
+    }
+
+    .poster-rule {
+      width: 48px;
+      height: 2px;
+      background: #C5A059;
+      margin-bottom: 40px;
+    }
+
+    .poster-headline {
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: 104px;
+      font-weight: 700;
+      line-height: 0.97;
+      letter-spacing: -0.045em;
+      color: #F7F5F0;
+      margin: 0 0 44px;
+    }
+
+    .poster-headline em {
+      font-style: italic;
+      font-weight: 600;
+      color: #C5A059;
+    }
+
+    .poster-sub {
+      font-size: 26px;
+      color: #7a7a74;
+      line-height: 1.65;
+      font-weight: 400;
+      max-width: 700px;
+    }
+
+    /* ── Features ── */
+    .poster-features {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 21px;
+      color: #4a4a46;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 40px;
+    }
+
+    .poster-features .sep {
+      color: #2e2e2a;
+      font-size: 28px;
+      font-weight: 300;
+    }
+
+    /* ── Footer ── */
+    .poster-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .poster-free {
+      font-size: 22px;
+      color: #4a4a46;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .poster-free::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #C5A059;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    .poster-url {
+      font-size: 28px;
+      color: #F7F5F0;
+      font-weight: 600;
+      font-family: 'Familjen Grotesk', sans-serif;
+      letter-spacing: -0.015em;
+    }
+
+    /* ─── CAPTIONS ─────────────────────────────────────── */
+    #captions {
+      width: 100%;
+      max-width: 640px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 32px;
+    }
+
+    #captions h2 {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .caption-block {
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.025);
+      padding: 20px 22px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+
+    .caption-block:hover { background: rgba(255,255,255,0.04); }
+
+    .caption-block p {
+      font-size: 0.85rem;
+      color: #8a8a86;
+      line-height: 1.7;
+    }
+
+    .caption-copy {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 0.7rem;
+      color: #4a4a46;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .caption-block:hover .caption-copy { opacity: 1; }
+
+    .caption-block.copied .caption-copy {
+      color: var(--gold);
+      opacity: 1;
+    }
+
+    /* ─── FULL-SIZE VIEW (poster.html?view=full) ─────── */
+    body.fullsize {
+      background: #1C1C1A;
+      padding: 0;
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+    }
+
+    body.fullsize #chrome,
+    body.fullsize #captions { display: none; }
+
+    body.fullsize .poster-wrap {
+      width: 1080px;
+      height: 1080px;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.fullsize .poster {
+      transform: none;
+    }
+
+    /* ─── PRINT ─────────────────────────────────────── */
+    @page { size: 1080px 1080px; margin: 0; }
+
+    @media print {
+      html, body {
+        background: #1C1C1A;
+        width: 1080px;
+        height: 1080px;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      #chrome, #captions { display: none !important; }
+
+      .poster-wrap {
+        width: 1080px;
+        height: 1080px;
+        border: none;
+        box-shadow: none;
+        overflow: hidden;
+      }
+
+      .poster {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── PAGE CHROME ── -->
+  <div id="chrome">
+    <div class="page-header">
+      <div>
+        <h1>Beta Poster</h1>
+        <p>Share on Instagram, Facebook groups, or photographer communities</p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="openFullSize()">Full Size (1080px)</button>
+        <button class="btn btn-primary" onclick="window.print()">Print / PDF</button>
+      </div>
+    </div>
+    <p class="page-hint">Preview is 50% scale. Use "Full Size" to open a screenshottable 1080×1080 tab, or "Print" → Save as PDF.</p>
+  </div>
+
+  <!-- ── POSTER ── -->
+  <div class="poster-wrap">
+    <div class="poster" id="poster">
+
+      <!-- Background texture -->
+      <div class="poster-texture"></div>
+
+      <!-- Decorative oversized mark -->
+      <svg class="poster-deco" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke-width="1.8" stroke-linejoin="round">
+          <rect x="8" y="9" width="44" height="13" rx="2.5"
+            fill="#F7F5F0"
+            transform="rotate(-4 30 15.5)"/>
+          <rect x="14" y="25" width="36" height="14" rx="2.5"
+            fill="#F7F5F0"
+            transform="rotate(-48 32 32)"/>
+          <rect x="12" y="42" width="44" height="13" rx="2.5"
+            fill="#C5A059"
+            transform="rotate(4 34 48.5)"/>
+        </g>
+      </svg>
+
+      <div class="poster-inner">
+
+        <!-- Header -->
+        <div class="poster-header">
+          <img
+            src="./assets/logo-dark.svg"
+            alt="zeyaroo"
+            class="poster-logo"
+          />
+          <div class="poster-badge">Beta Testers Wanted</div>
+        </div>
+
+        <!-- Body -->
+        <div class="poster-body">
+          <p class="poster-label">For Photographers &amp; Videographers</p>
+          <div class="poster-rule"></div>
+          <h1 class="poster-headline">
+            Your craft<br>
+            deserves <em>better</em><br>
+            <em>business.</em>
+          </h1>
+          <p class="poster-sub">
+            Structured proposals, milestone payments,<br>
+            and protected media delivery — all in one place.
+          </p>
+        </div>
+
+        <!-- Features -->
+        <div class="poster-features">
+          <span>Proposals</span>
+          <span class="sep">·</span>
+          <span>Escrow Payments</span>
+          <span class="sep">·</span>
+          <span>Watermarked Galleries</span>
+        </div>
+
+        <!-- Footer -->
+        <div class="poster-footer">
+          <span class="poster-free">Free during beta &nbsp;·&nbsp; No card needed</span>
+          <span class="poster-url">zeyaroo.com →</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CAPTIONS ── -->
+  <div id="captions">
+    <h2>Suggested Captions</h2>
+
+    <div class="caption-block" onclick="copyCaption(this)">
+      <span class="caption-copy">Copy</span>
+      <p>📸 We're building Zeyaroo — a platform for photographers &amp; videographers to manage client work, proposals, and payments in one place. Looking for 20 beta testers to help us shape it. Free to join. DM me or drop your email in the comments. 👇</p>
+    </div>
+
+    <div class="caption-block" onclick="copyCaption(this)">
+      <span class="caption-copy">Copy</span>
+      <p>Tired of chasing clients for payments and losing proposals in email threads? We built something for that. Zeyaroo is entering beta — structured proposals, milestone escrow, and watermarked galleries for creative professionals. Totally free during beta. DM to get early access. 🎬</p>
+    </div>
+
+    <div class="caption-block" onclick="copyCaption(this)">
+      <span class="caption-copy">Copy</span>
+      <p>We're opening Zeyaroo beta to a small group of photographers and videographers who want to run their business with clarity and protection. Founding members get free access + a locked-in rate at launch. Spots are limited — link in bio or DM me. ✦</p>
+    </div>
+  </div>
+
+  <script>
+    // Full-size view: ?view=full
+    if (new URLSearchParams(location.search).get('view') === 'full') {
+      document.body.classList.add('fullsize');
+    }
+
+    // Open a clean 1080×1080 tab for screenshotting
+    function openFullSize() {
+      window.open(location.pathname + '?view=full', '_blank', 'width=1080,height=1080,menubar=no,toolbar=no,location=no,status=no');
+    }
+
+    // Copy caption to clipboard
+    function copyCaption(el) {
+      const text = el.querySelector('p').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        el.classList.add('copied');
+        el.querySelector('.caption-copy').textContent = 'Copied!';
+        setTimeout(() => {
+          el.classList.remove('copied');
+          el.querySelector('.caption-copy').textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
