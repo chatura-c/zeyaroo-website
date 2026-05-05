@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-print="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeyaroo — Social Media Assets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0c0c0a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 56px 32px 80px;
+      gap: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 48px;
+    }
+    .page-title {
+      color: #F0EDE8;
+      font-family: 'Familjen Grotesk', system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .page-note {
+      color: #2E2E2C;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── Section header ── */
+    .section-header {
+      width: 820px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #1A1A18;
+      margin-bottom: 20px;
+      margin-top: 56px;
+    }
+    .section-header:first-of-type { margin-top: 0; }
+    .section-title {
+      color: #F0EDE8;
+      font-family: 'Familjen Grotesk', system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+    }
+    .section-note {
+      color: #2E2E2C;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Variant row (cover) ── */
+    .variant {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .variant:last-of-type { margin-bottom: 0; }
+
+    .variant-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 820px;
+    }
+    .variant-label {
+      color: #484844;
+      font-size: 11px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ── Export button ── */
+    .export-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1px solid #252523;
+      color: #565652;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .export-btn:hover { border-color: #C5A059; color: #C5A059; }
+    .export-btn svg { opacity: 0.55; transition: opacity 0.15s; }
+    .export-btn:hover svg { opacity: 1; }
+
+    /* ── Cover ── */
+    .cover {
+      width: 820px;
+      height: 312px;
+      overflow: hidden;
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px #1A1A18, 0 20px 72px rgba(0,0,0,0.6), 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    /* ── Profile picture grid ── */
+    .pp-grid {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .pp-variant {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 340px;
+    }
+    .pp-cover {
+      width: 340px;
+      height: 340px;
+      overflow: hidden;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #1A1A18, 0 16px 56px rgba(0,0,0,0.55), 0 4px 16px rgba(0,0,0,0.35);
+    }
+
+    /* ─────────────────────────────────────────
+       PRINT
+       exportAsset() injects @page size dynamically
+       and sets data-print on <html>.
+    ───────────────────────────────────────── */
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+      body {
+        background: transparent !important;
+        margin: 0 !important; padding: 0 !important;
+        display: block !important; min-height: unset !important;
+      }
+
+      .page-header, .section-header,
+      .variant-header, .pp-header { display: none !important; }
+
+      /* Hide everything */
+      .variant  { display: none !important; }
+      .pp-grid  { display: none !important; }
+
+      /* Cover targets */
+      html[data-print="dark"]  .variant-dark  { display: block !important; }
+      html[data-print="light"] .variant-light { display: block !important; }
+
+      html[data-print="dark"]  .cover,
+      html[data-print="light"] .cover {
+        width: 1640px !important; height: 624px !important;
+        border-radius: 0 !important; box-shadow: none !important;
+        margin: 0 !important;
+      }
+      html[data-print="dark"]  .cover svg,
+      html[data-print="light"] .cover svg {
+        width: 1640px !important; height: 624px !important;
+      }
+
+      /* Profile pic targets */
+      html[data-print="pp-dark"],
+      html[data-print="pp-light"] { }
+
+      html[data-print="pp-dark"]  .pp-grid,
+      html[data-print="pp-light"] .pp-grid { display: block !important; }
+
+      html[data-print="pp-dark"]  .pp-variant-light,
+      html[data-print="pp-light"] .pp-variant-dark  { display: none !important; }
+
+      html[data-print="pp-dark"]  .pp-variant-dark,
+      html[data-print="pp-light"] .pp-variant-light { display: block !important; }
+
+      html[data-print="pp-dark"]  .pp-cover,
+      html[data-print="pp-light"] .pp-cover {
+        width: 1024px !important; height: 1024px !important;
+        border-radius: 0 !important; box-shadow: none !important;
+        margin: 0 !important;
+      }
+      html[data-print="pp-dark"]  .pp-cover svg,
+      html[data-print="pp-light"] .pp-cover svg {
+        width: 1024px !important; height: 1024px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <span class="page-title">Social Media Assets · Zeyaroo</span>
+    <span class="page-note">Facebook · Cover + Profile Picture</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       COVERS
+  ═══════════════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-title">Cover Photo</span>
+    <span class="section-note">1640 × 624 px · profile pic overlaps bottom-left ~340 × 340</span>
+  </div>
+
+  <!-- Cover · Dark -->
+  <div class="variant variant-dark">
+    <div class="variant-header">
+      <span class="variant-label">Dark</span>
+      <button class="export-btn" onclick="exportAsset('dark', 1640, 624)">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 1v7M3 5.5l3 3 3-3M1 9v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V9"/>
+        </svg>
+        Export PDF
+      </button>
+    </div>
+    <div class="cover">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 624" width="820" height="312">
+        <defs>
+          <radialGradient id="cdk-glow" cx="90%" cy="0%" r="65%">
+            <stop offset="0%"   stop-color="#C5A059" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#C5A059" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="cdk-bloom" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#C5A059" stop-opacity="0.11"/>
+            <stop offset="100%" stop-color="#C5A059" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <rect width="1640" height="624" fill="#141412"/>
+        <rect width="1640" height="624" fill="url(#cdk-glow)"/>
+        <ellipse cx="228" cy="308" rx="260" ry="260" fill="url(#cdk-bloom)"/>
+
+        <!-- Mark · 4.5× -->
+        <g transform="translate(80, 168) scale(4.5)" stroke-linejoin="round">
+          <rect x="8"  y="9"  width="44" height="13" rx="2.5" fill="#1C1C1A" stroke="#F7F5F0" stroke-width="2.2" transform="rotate(-4 30 15.5)"/>
+          <rect x="14" y="25" width="36" height="14" rx="2.5" fill="#1C1C1A" stroke="#F7F5F0" stroke-width="2.2" transform="rotate(-48 32 32)"/>
+          <rect x="12" y="42" width="44" height="13" rx="2.5" fill="#C5A059" stroke="#C5A059" stroke-width="2.2" transform="rotate(4 34 48.5)"/>
+        </g>
+
+        <line x1="462" y1="144" x2="462" y2="480" stroke="#222220" stroke-width="1"/>
+
+        <text font-family="'Familjen Grotesk', 'Inter', system-ui, sans-serif" font-weight="600" font-size="152" letter-spacing="-4" x="522" y="348" fill="#F0EDE8">
+          <tspan fill="#C5A059">z</tspan>eyaroo
+        </text>
+        <text font-family="'Inter', system-ui, sans-serif" font-weight="400" font-size="29" letter-spacing="4.5" x="528" y="400" fill="#5A5A54">
+          creator · client · collaboration
+        </text>
+        <text font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="21" letter-spacing="0.5" x="528" y="572" fill="#4E4E4A">
+          zeyaroo.com
+        </text>
+
+        <line x1="0" y1="604" x2="1640" y2="604" stroke="#1C1C1A" stroke-width="1"/>
+
+        <!-- Ghost mark -->
+        <g transform="translate(1248, 0) scale(9.75)" opacity="0.055" stroke-linejoin="round">
+          <rect x="8"  y="9"  width="44" height="13" rx="2.5" fill="none" stroke="#F7F5F0" stroke-width="2.2" transform="rotate(-4 30 15.5)"/>
+          <rect x="14" y="25" width="36" height="14" rx="2.5" fill="none" stroke="#F7F5F0" stroke-width="2.2" transform="rotate(-48 32 32)"/>
+          <rect x="12" y="42" width="44" height="13" rx="2.5" fill="none" stroke="#C5A059" stroke-width="2.2" transform="rotate(4 34 48.5)"/>
+        </g>
+
+        <!-- L-brackets -->
+        <line x1="1534" y1="44"  x2="1598" y2="44"  stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="1598" y1="44"  x2="1598" y2="120" stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="1534" y1="580" x2="1598" y2="580" stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="1598" y1="504" x2="1598" y2="580" stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Cover · Light -->
+  <div class="variant variant-light">
+    <div class="variant-header">
+      <span class="variant-label">Light</span>
+      <button class="export-btn" onclick="exportAsset('light', 1640, 624)">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 1v7M3 5.5l3 3 3-3M1 9v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V9"/>
+        </svg>
+        Export PDF
+      </button>
+    </div>
+    <div class="cover">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 624" width="820" height="312">
+        <defs>
+          <radialGradient id="clt-glow" cx="90%" cy="0%" r="65%">
+            <stop offset="0%"   stop-color="#C5A059" stop-opacity="0.09"/>
+            <stop offset="100%" stop-color="#C5A059" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="clt-bloom" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#C5A059" stop-opacity="0.10"/>
+            <stop offset="100%" stop-color="#C5A059" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <rect width="1640" height="624" fill="#F7F5F0"/>
+        <rect width="1640" height="624" fill="url(#clt-glow)"/>
+        <ellipse cx="228" cy="308" rx="260" ry="260" fill="url(#clt-bloom)"/>
+
+        <!-- Mark · 4.5× (light) -->
+        <g transform="translate(80, 168) scale(4.5)" stroke-linejoin="round">
+          <rect x="8"  y="9"  width="44" height="13" rx="2.5" fill="#F7F5F0" stroke="#1C1C1A" stroke-width="2.2" transform="rotate(-4 30 15.5)"/>
+          <rect x="14" y="25" width="36" height="14" rx="2.5" fill="#F7F5F0" stroke="#1C1C1A" stroke-width="2.2" transform="rotate(-48 32 32)"/>
+          <rect x="12" y="42" width="44" height="13" rx="2.5" fill="#C5A059" stroke="#C5A059" stroke-width="2.2" transform="rotate(4 34 48.5)"/>
+        </g>
+
+        <line x1="462" y1="144" x2="462" y2="480" stroke="#D8D4CC" stroke-width="1"/>
+
+        <text font-family="'Familjen Grotesk', 'Inter', system-ui, sans-serif" font-weight="600" font-size="152" letter-spacing="-4" x="522" y="348" fill="#1C1C1A">
+          <tspan fill="#C5A059">z</tspan>eyaroo
+        </text>
+        <text font-family="'Inter', system-ui, sans-serif" font-weight="400" font-size="29" letter-spacing="4.5" x="528" y="400" fill="#9A9A92">
+          creator · client · collaboration
+        </text>
+        <text font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="21" letter-spacing="0.5" x="528" y="572" fill="#B8B4AC">
+          zeyaroo.com
+        </text>
+
+        <line x1="0" y1="604" x2="1640" y2="604" stroke="#E0DDD5" stroke-width="1"/>
+
+        <!-- Ghost mark -->
+        <g transform="translate(1248, 0) scale(9.75)" opacity="0.05" stroke-linejoin="round">
+          <rect x="8"  y="9"  width="44" height="13" rx="2.5" fill="none" stroke="#1C1C1A" stroke-width="2.2" transform="rotate(-4 30 15.5)"/>
+          <rect x="14" y="25" width="36" height="14" rx="2.5" fill="none" stroke="#1C1C1A" stroke-width="2.2" transform="rotate(-48 32 32)"/>
+          <rect x="12" y="42" width="44" height="13" rx="2.5" fill="none" stroke="#C5A059" stroke-width="2.2" transform="rotate(4 34 48.5)"/>
+        </g>
+
+        <!-- L-brackets -->
+        <line x1="1534" y1="44"  x2="1598" y2="44"  stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="1598" y1="44"  x2="1598" y2="120" stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="1534" y1="580" x2="1598" y2="580" stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="1598" y1="504" x2="1598" y2="580" stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       PROFILE PICTURES
+  ═══════════════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-title">Profile Picture</span>
+    <span class="section-note">1024 × 1024 px · Facebook crops to circle</span>
+  </div>
+
+  <div class="pp-grid">
+
+    <!-- Profile Pic · Dark -->
+    <div class="pp-variant pp-variant-dark">
+      <div class="pp-header">
+        <span class="variant-label">Dark</span>
+        <button class="export-btn" onclick="exportAsset('pp-dark', 1024, 1024)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 1v7M3 5.5l3 3 3-3M1 9v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V9"/>
+          </svg>
+          Export PDF
+        </button>
+      </div>
+      <div class="pp-cover">
+        <!--
+          Canvas: 1024 × 1024 px  ·  Displayed at 340 × 340 px
+          Mark at 9× scale: 576 × 576 grid, placed at (224, 224)
+          Visual center: (224 + 288, 224 + 288) = (512, 512)
+        -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="340" height="340">
+          <defs>
+            <radialGradient id="ppdk-bloom" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#C5A059" stop-opacity="0.22"/>
+              <stop offset="55%"  stop-color="#C5A059" stop-opacity="0.07"/>
+              <stop offset="100%" stop-color="#C5A059" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <rect width="1024" height="1024" fill="#141412"/>
+          <rect width="1024" height="1024" fill="url(#ppdk-bloom)"/>
+
+          <!-- Mark · 9× -->
+          <g transform="translate(224, 224) scale(9)" stroke-linejoin="round">
+            <rect x="8"  y="9"  width="44" height="13" rx="2.5" fill="#1C1C1A" stroke="#F7F5F0" stroke-width="2.2" transform="rotate(-4 30 15.5)"/>
+            <rect x="14" y="25" width="36" height="14" rx="2.5" fill="#1C1C1A" stroke="#F7F5F0" stroke-width="2.2" transform="rotate(-48 32 32)"/>
+            <rect x="12" y="42" width="44" height="13" rx="2.5" fill="#C5A059" stroke="#C5A059" stroke-width="2.2" transform="rotate(4 34 48.5)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Profile Pic · Light -->
+    <div class="pp-variant pp-variant-light">
+      <div class="pp-header">
+        <span class="variant-label">Light</span>
+        <button class="export-btn" onclick="exportAsset('pp-light', 1024, 1024)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 1v7M3 5.5l3 3 3-3M1 9v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V9"/>
+          </svg>
+          Export PDF
+        </button>
+      </div>
+      <div class="pp-cover">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="340" height="340">
+          <defs>
+            <radialGradient id="pplt-bloom" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#C5A059" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="#C5A059" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <rect width="1024" height="1024" fill="#F7F5F0"/>
+          <rect width="1024" height="1024" fill="url(#pplt-bloom)"/>
+
+          <!-- Mark · 9× (light) -->
+          <g transform="translate(224, 224) scale(9)" stroke-linejoin="round">
+            <rect x="8"  y="9"  width="44" height="13" rx="2.5" fill="#F7F5F0" stroke="#1C1C1A" stroke-width="2.2" transform="rotate(-4 30 15.5)"/>
+            <rect x="14" y="25" width="36" height="14" rx="2.5" fill="#F7F5F0" stroke="#1C1C1A" stroke-width="2.2" transform="rotate(-48 32 32)"/>
+            <rect x="12" y="42" width="44" height="13" rx="2.5" fill="#C5A059" stroke="#C5A059" stroke-width="2.2" transform="rotate(4 34 48.5)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+  </div><!-- /pp-grid -->
+
+  <script>
+    function exportAsset(id, w, h) {
+      // Inject @page size dynamically — can't use static @page for different sizes
+      const prev = document.getElementById('__ps');
+      if (prev) prev.remove();
+      const s = document.createElement('style');
+      s.id = '__ps';
+      s.textContent = `@media print { @page { size: ${w}px ${h}px; margin: 0; } }`;
+      document.head.appendChild(s);
+
+      document.documentElement.setAttribute('data-print', id);
+      window.print();
+      setTimeout(() => {
+        document.documentElement.setAttribute('data-print', '');
+        s.remove();
+      }, 100);
+    }
+  </script>
+
+</body>
+</html>

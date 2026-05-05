@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zeyaroo — Facebook Outreach</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F7F5F0;
+      --ink:     #1C1C1A;
+      --muted:   #8E8E88;
+      --gold:    #C5A059;
+      --gold-dk: #8B6B2E;
+    }
+
+    /* ─── PAGE CHROME ─────────────────────────────────── */
+    body {
+      background: #141412;
+      color: var(--cream);
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      padding: 48px 32px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    #chrome {
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 8px;
+    }
+
+    .page-header h1 {
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--cream);
+    }
+
+    .page-header p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      padding: 0.55rem 1.1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .btn-primary:hover { background: #d4b070; }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+    .page-hint {
+      font-size: 0.75rem;
+      color: #4a4a46;
+      margin-top: 12px;
+    }
+
+    /* ─── POSTER WRAP (1200×630 → 760×399 preview) ──── */
+    .poster-wrap {
+      width: 760px;
+      height: 399px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    /* ─── POSTER (1200×630, scaled to 760px wide) ─────── */
+    .poster {
+      width: 1200px;
+      height: 630px;
+      transform: scale(0.6333);
+      transform-origin: top left;
+
+      background: #1C1C1A;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Gold grid texture */
+    .poster-texture {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(197,160,89,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(197,160,89,0.055) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 110% 90% at 60% 50%, black 10%, transparent 72%);
+      pointer-events: none;
+    }
+
+    /* Right-side glow */
+    .poster-glow {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 560px;
+      height: 560px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(197,160,89,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Decorative oversized mark */
+    .poster-deco {
+      position: absolute;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-52%);
+      width: 380px;
+      height: 380px;
+      opacity: 0.05;
+      pointer-events: none;
+    }
+
+    .poster-inner {
+      position: relative;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 60px 80px;
+      gap: 60px;
+    }
+
+    /* ── Left column ── */
+    .poster-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .poster-logo {
+      height: 38px;
+      display: block;
+      margin-bottom: 36px;
+    }
+
+    .poster-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1px solid rgba(197,160,89,0.35);
+      background: rgba(197,160,89,0.06);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #C5A059;
+      width: fit-content;
+      margin-bottom: 28px;
+    }
+
+    .poster-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #C5A059;
+      flex-shrink: 0;
+    }
+
+    .poster-headline {
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      color: #F7F5F0;
+      margin-bottom: 24px;
+    }
+
+    .poster-headline em {
+      font-style: italic;
+      font-weight: 600;
+      color: #C5A059;
+    }
+
+    .poster-sub {
+      font-size: 17px;
+      color: #6a6a64;
+      line-height: 1.6;
+      font-weight: 400;
+      max-width: 520px;
+    }
+
+    /* ── Right column ── */
+    .poster-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .poster-invite-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #4a4a46;
+    }
+
+    .poster-url-box {
+      border: 1px solid rgba(197,160,89,0.25);
+      background: rgba(197,160,89,0.05);
+      padding: 20px 26px;
+      text-align: center;
+    }
+
+    .poster-url-action {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #C5A059;
+      margin-bottom: 8px;
+    }
+
+    .poster-url {
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #F7F5F0;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .poster-free {
+      font-size: 13px;
+      color: #4a4a46;
+      font-weight: 400;
+    }
+
+    /* ── Bottom strip ── */
+    .poster-strip {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 80px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      background: rgba(0,0,0,0.2);
+    }
+
+    .poster-strip-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #3a3a36;
+    }
+
+    .poster-features {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: #3e3e3a;
+      font-weight: 500;
+    }
+
+    .poster-features .sep {
+      color: #2a2a26;
+      font-weight: 300;
+    }
+
+    /* ─── MESSAGE TEMPLATES ─────────────────────────────── */
+    #messages {
+      width: 100%;
+      max-width: 760px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 32px;
+    }
+
+    #messages h2 {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    #messages .section-desc {
+      font-size: 0.8rem;
+      color: #4a4a46;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .msg-block {
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.025);
+      padding: 20px 22px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+
+    .msg-block:hover { background: rgba(255,255,255,0.04); }
+
+    .msg-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #C5A059;
+      margin-bottom: 10px;
+    }
+
+    .msg-block p {
+      font-size: 0.85rem;
+      color: #8a8a86;
+      line-height: 1.75;
+      white-space: pre-wrap;
+    }
+
+    .msg-copy {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 0.7rem;
+      color: #4a4a46;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .msg-block:hover .msg-copy { opacity: 1; }
+
+    .msg-block.copied .msg-copy {
+      color: var(--gold);
+      opacity: 1;
+    }
+
+    /* ─── FULL-SIZE VIEW ──────────────────────────────── */
+    body.fullsize {
+      background: #1C1C1A;
+      padding: 0;
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+    }
+
+    body.fullsize #chrome,
+    body.fullsize #messages { display: none; }
+
+    body.fullsize .poster-wrap {
+      width: 1200px;
+      height: 630px;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.fullsize .poster {
+      transform: none;
+    }
+
+    /* ─── PRINT ──────────────────────────────────────── */
+    @page { size: 1200px 630px; margin: 0; }
+
+    @media print {
+      html, body {
+        background: #1C1C1A;
+        width: 1200px;
+        height: 630px;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      #chrome, #messages { display: none !important; }
+
+      .poster-wrap {
+        width: 1200px;
+        height: 630px;
+        border: none;
+        box-shadow: none;
+        overflow: hidden;
+      }
+
+      .poster {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── PAGE CHROME ── -->
+  <div id="chrome">
+    <div class="page-header">
+      <div>
+        <h1>Facebook Outreach</h1>
+        <p>Poster (1200×630) + DM message templates for direct outreach to potential beta users</p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="openFullSize()">Full Size (1200×630)</button>
+        <button class="btn btn-ghost" onclick="exportImage()" id="btn-export">Export PNG</button>
+        <button class="btn btn-primary" onclick="window.print()">Print / PDF</button>
+      </div>
+    </div>
+    <p class="page-hint">Preview is ~63% scale. Use "Full Size" to open a screenshottable 1200×630 tab, or "Print" → Save as PDF.</p>
+  </div>
+
+  <!-- ── POSTER ── -->
+  <div class="poster-wrap">
+    <div class="poster" id="poster">
+
+      <div class="poster-texture"></div>
+      <div class="poster-glow"></div>
+
+      <!-- Decorative mark -->
+      <svg class="poster-deco" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke-width="1.8" stroke-linejoin="round">
+          <rect x="8" y="9" width="44" height="13" rx="2.5"
+            fill="#F7F5F0"
+            transform="rotate(-4 30 15.5)"/>
+          <rect x="14" y="25" width="36" height="14" rx="2.5"
+            fill="#F7F5F0"
+            transform="rotate(-48 32 32)"/>
+          <rect x="12" y="42" width="44" height="13" rx="2.5"
+            fill="#C5A059"
+            transform="rotate(4 34 48.5)"/>
+        </g>
+      </svg>
+
+      <div class="poster-inner">
+
+        <!-- Left -->
+        <div class="poster-left">
+          <img src="./assets/logo-dark.svg" alt="zeyaroo" class="poster-logo" />
+          <div class="poster-badge">Personal Invite · Beta Access</div>
+          <h1 class="poster-headline">
+            Run your<br>
+            creative work<br>
+            <em>professionally.</em>
+          </h1>
+          <p class="poster-sub">
+            Proposals, milestone payments, and watermarked<br>
+            media delivery — built for photographers &amp; videographers.
+          </p>
+        </div>
+
+        <!-- Right -->
+        <div class="poster-right">
+          <span class="poster-invite-label">Join the waitlist</span>
+          <div class="poster-url-box">
+            <div class="poster-url-action">Sign up free</div>
+            <div class="poster-url">zeyaroo.com/register</div>
+          </div>
+          <span class="poster-free">2 months free · 50% lifetime discount</span>
+        </div>
+
+      </div>
+
+      <!-- Bottom strip -->
+      <div class="poster-strip">
+        <span class="poster-strip-label">What you get</span>
+        <div class="poster-features">
+          <span>Structured Proposals</span>
+          <span class="sep">·</span>
+          <span>Escrow Payments</span>
+          <span class="sep">·</span>
+          <span>Watermarked Galleries</span>
+          <span class="sep">·</span>
+          <span>Client Collaboration</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── MESSAGE TEMPLATES ── -->
+  <div id="messages">
+    <h2>DM Message Templates</h2>
+    <p class="section-desc">Send as a Facebook DM with the image attached. Replace [Name] before sending.</p>
+
+    <div class="msg-block" onclick="copyMsg(this)">
+      <span class="msg-copy">Copy</span>
+      <div class="msg-label">Shortest</div>
+      <p>Hey [Name]! Zeyaroo is now accepting beta testers — a platform built for photographers and videographers to manage proposals, payments, and client delivery in one place. First 2 months completely free + 50% lifetime discount for beta members. Spots are limited: zeyaroo.com/register</p>
+    </div>
+
+    <div class="msg-block" onclick="copyMsg(this)">
+      <span class="msg-copy">Copy</span>
+      <div class="msg-label">With context</div>
+      <p>Hey [Name]! Zeyaroo is now open for beta testers. It's built for photographers and videographers — structured proposals, milestone payments, and watermarked media delivery, all in one place. Beta members get 2 months free and a 50% lifetime discount after that. No card needed to join: zeyaroo.com/register</p>
+    </div>
+
+    <div class="msg-block" onclick="copyMsg(this)">
+      <span class="msg-copy">Copy</span>
+      <div class="msg-label">Pain-point opener</div>
+      <p>Hey [Name]! Still chasing clients over WhatsApp and email? Zeyaroo is now accepting beta testers — proposals, payments, and protected galleries for photographers and videographers in one place. 2 months free + 50% off for life as a founding member. Worth a look: zeyaroo.com/register</p>
+    </div>
+
+  </div>
+
+  <script>
+    if (new URLSearchParams(location.search).get('view') === 'full') {
+      document.body.classList.add('fullsize');
+    }
+
+    function openFullSize() {
+      window.open(location.pathname + '?view=full', '_blank', 'width=1200,height=630,menubar=no,toolbar=no,location=no,status=no');
+    }
+
+    async function exportImage() {
+      const btn = document.getElementById('btn-export');
+      btn.textContent = 'Exporting…';
+      btn.disabled = true;
+
+      const poster = document.getElementById('poster');
+
+      // Clone off-screen at native 1200×630 — no CSS scale transform applied
+      const clone = poster.cloneNode(true);
+      clone.style.transform = 'none';
+      clone.style.position = 'fixed';
+      clone.style.top = '-9999px';
+      clone.style.left = '-9999px';
+      document.body.appendChild(clone);
+
+      try {
+        const canvas = await html2canvas(clone, {
+          width: 1200,
+          height: 630,
+          scale: 1,
+          useCORS: true,
+          backgroundColor: '#1C1C1A',
+          logging: false,
+        });
+
+        const link = document.createElement('a');
+        link.download = 'zeyaroo-outreach.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } finally {
+        document.body.removeChild(clone);
+        btn.textContent = 'Export PNG';
+        btn.disabled = false;
+      }
+    }
+
+    function copyMsg(el) {
+      const text = el.querySelector('p').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        el.classList.add('copied');
+        el.querySelector('.msg-copy').textContent = 'Copied!';
+        setTimeout(() => {
+          el.classList.remove('copied');
+          el.querySelector('.msg-copy').textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
