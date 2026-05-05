@@ -5,16 +5,30 @@ set -euo pipefail
 DEST="ubuntu@YOUR_SERVER_IP:/opt/zeyaroo/landing"
 KEY="$HOME/.ssh/id_ed25519"
 
+echo "Creating destination directory..."
 ssh -i "$KEY" ubuntu@YOUR_SERVER_IP "mkdir -p /opt/zeyaroo/landing/assets"
 
-rsync -az --delete \
-  -e "ssh -i $KEY" \
-  "$(dirname "$0")/brochure.html" \
-  "$DEST/index.html"
+echo "Deploying index.html (from brochure.html)..."
+scp -i "$KEY" "$(dirname "$0")/brochure.html" "$DEST/index.html"
 
-rsync -az --delete \
-  -e "ssh -i $KEY" \
-  "$(dirname "$0")/assets/" \
-  "$DEST/assets/"
+echo "Deploying assets folder..."
+scp -r -i "$KEY" "$(dirname "$0")/assets/" "$DEST/"
 
-echo "Landing page deployed to $DEST"
+echo "Deploying additional HTML files..."
+scp -i "$KEY" \
+  "$(dirname "$0")/poster.html" \
+  "$(dirname "$0")/facebook-cover.html" \
+  "$(dirname "$0")/outreach.html" \
+  "$DEST/"
+
+echo "Deploying logo and asset files..."
+scp -i "$KEY" \
+  "$(dirname "$0")/favicon.png" \
+  "$(dirname "$0")/logo.png" \
+  "$(dirname "$0")/logo-dark.png" \
+  "$(dirname "$0")/logo-mark.png" \
+  "$(dirname "$0")/logo-mark-dark.png" \
+  "$(dirname "$0")/noise.png" \
+  "$DEST/"
+
+echo "Landing page deployed successfully to $DEST"
